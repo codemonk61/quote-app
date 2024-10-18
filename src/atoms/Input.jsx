@@ -2,7 +2,14 @@
 import { css } from '@emotion/react';
 import PropTypes from 'prop-types';
 
-const Input = ({ type, height, onChange, value, placeHolder, bgColor }) => {
+const Input = ({
+  type = 'text',
+  height = '30px',
+  onChange = () => {},
+  value = '',
+  placeHolder = 'Enter text',
+  bgColor = 'white',
+}) => {
   // CSS styles for text input
   const inputStyle = css`
     height: ${height};
@@ -13,6 +20,7 @@ const Input = ({ type, height, onChange, value, placeHolder, bgColor }) => {
     box-sizing: border-box;
     background-color: ${bgColor};
     font-size: 14px;
+
     &:focus {
       border-color: #7e8dfa;
       outline: none;
@@ -21,29 +29,31 @@ const Input = ({ type, height, onChange, value, placeHolder, bgColor }) => {
 
   // CSS styles for file input
   const fileInputStyle = css`
-    display: none; /* Hide the default file input */
+    display: block; /* Hide the default file input */
   `;
 
-  const fileLabelStyle = css`
-    height: ${height};
-    line-height: ${height};
-    padding: 8px;
-    background-color: ${bgColor}; /* Custom background color */
-    border: 2px dashed #7e8dfa;
-    border-radius: 4px;
-    cursor: pointer;
-    text-align: center; /* Center text */
-    display: block; /* Center in line with the file input */
-    color: #7e8dfa; /* Text color */
-    font-size: 30px;
-     span {
-     display: block;
-     transform: rotate(270deg);
-    };
-    &:hover {
-      opacity: 0.8; /* Change opacity on hover */
-    }
-  `;
+  // const fileLabelStyle = css`
+  //   height: ${height};
+  //   line-height: ${height};
+  //   padding: 8px;
+  //   background-color: ${bgColor}; /* Custom background color */
+  //   border: 2px dashed #7e8dfa;
+  //   border-radius: 4px;
+  //   cursor: pointer;
+  //   text-align: center; /* Center text */
+  //   display: block; /* Center in line with the file input */
+  //   color: #7e8dfa; /* Text color */
+  //   font-size: 30px;
+
+  //   span {
+  //     display: block;
+  //     transform: rotate(270deg);
+  //   }
+
+  //   &:hover {
+  //     opacity: 0.8; /* Change opacity on hover */
+  //   }
+  // `;
 
   return (
     <>
@@ -55,9 +65,9 @@ const Input = ({ type, height, onChange, value, placeHolder, bgColor }) => {
             onChange={onChange}
             id="file-upload" // Unique ID for the file input
           />
-          <label htmlFor="file-upload" css={fileLabelStyle}>
+          {/* <label htmlFor="file-upload" css={fileLabelStyle}>
             <span>&#10162;</span>
-          </label>
+          </label> */}
         </>
       ) : (
         <input
@@ -72,7 +82,7 @@ const Input = ({ type, height, onChange, value, placeHolder, bgColor }) => {
   );
 };
 
-// Prop Types Validation and Default Props
+// Prop Types Validation
 Input.propTypes = {
   type: PropTypes.string,
   height: PropTypes.string,
@@ -80,15 +90,6 @@ Input.propTypes = {
   value: PropTypes.string,
   placeHolder: PropTypes.string,
   bgColor: PropTypes.string,
-};
-
-Input.defaultProps = {
-  type: 'text',
-  height: '30px',
-  onChange: () => { },
-  value: '',
-  placeHolder: 'Enter text',
-  bgColor: 'white', // Default background color
 };
 
 export default Input;

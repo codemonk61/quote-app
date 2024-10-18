@@ -3,28 +3,28 @@ import { css } from '@emotion/react';
 import PropTypes from 'prop-types';
 
 const Text = ({
-  marginTop,
-  marginBottom,
-  marginLeft,
-  marginRight,
+  marginTop = '0',
+  marginBottom = '0',
+  marginLeft = '0',
+  marginRight = '0',
   text,
-  color,
-  fontSize,
-  fontWeight,
-  ellipsis,
-  alignment,
-  RenderAs = 'p'
+  color = 'black',
+  fontSize = '16px',
+  fontWeight = 'normal',
+  ellipsis = false,
+  alignment = 'left',
+  RenderAs = 'p',
 }) => {
   // CSS styles using Emotion
   const textStyle = css`
-    margin-top: ${marginTop || '0'};
-    margin-bottom: ${marginBottom || '0'};
-    margin-left: ${marginLeft || '0'};
-    margin-right: ${marginRight || '0'};
-    color: ${color || 'black'};
-    font-size: ${fontSize || '16px'};
-    font-weight: ${fontWeight || 'normal'};
-    text-align: ${alignment || 'left'}; /* Set text alignment */
+    margin-top: ${marginTop};
+    margin-bottom: ${marginBottom};
+    margin-left: ${marginLeft};
+    margin-right: ${marginRight};
+    color: ${color};
+    font-size: ${fontSize};
+    font-weight: ${fontWeight};
+    text-align: ${alignment}; /* Set text alignment */
     white-space: ${ellipsis ? 'nowrap' : 'normal'};
     overflow: ${ellipsis ? 'hidden' : 'visible'};
     text-overflow: ${ellipsis ? 'ellipsis' : 'clip'};
@@ -33,7 +33,7 @@ const Text = ({
   return <RenderAs css={textStyle}>{text}</RenderAs>;
 };
 
-// Prop Types Validation and Default Props
+// Prop Types Validation
 Text.propTypes = {
   marginTop: PropTypes.string,
   marginBottom: PropTypes.string,
@@ -45,18 +45,7 @@ Text.propTypes = {
   fontWeight: PropTypes.string,
   ellipsis: PropTypes.bool,
   alignment: PropTypes.oneOf(['left', 'right', 'center', 'justify']), // Define alignment options
-};
-
-Text.defaultProps = {
-  marginTop: '0',
-  marginBottom: '0',
-  marginLeft: '0',
-  marginRight: '0',
-  color: 'black',
-  fontSize: '16px',
-  fontWeight: 'normal',
-  ellipsis: false,
-  alignment: 'left', // Default alignment
+  RenderAs: PropTypes.elementType, // Prop type for dynamic component rendering
 };
 
 export default Text;

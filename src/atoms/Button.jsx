@@ -3,22 +3,24 @@ import { css } from '@emotion/react';
 import PropTypes from 'prop-types';
 
 const Button = ({
-  block,
-  alignment,
-  bgColor,
+  block = false,
+  alignment = 'center',
+  bgColor = '#7e8dfa',
   innerText,
-  onClick,
-  marginTop,
-  marginBottom,
-  marginLeft,
-  marginRight, }) => {
+  onClick = () => alert('Button clicked!'),
+  marginTop = '0',
+  marginBottom = '0',
+  marginLeft = '0',
+  marginRight = '0',
+}) => {
   // CSS styles using Emotion
   const buttonWrapper = css`
-    margin-top: ${marginTop || '0'};
-    margin-bottom: ${marginBottom || '0'};
-    margin-left: ${marginLeft || '0'};
-    margin-right: ${marginRight || '0'};
-  `
+    margin-top: ${marginTop};
+    margin-bottom: ${marginBottom};
+    margin-left: ${marginLeft};
+    margin-right: ${marginRight};
+  `;
+
   const buttonStyle = css`
     display: ${block ? 'block' : 'inline-block'};
     width: ${block ? '100%' : 'auto'};
@@ -31,6 +33,7 @@ const Button = ({
     cursor: pointer;
     margin: 5px 0;
     transition: opacity 0.3s ease;
+
     &:hover {
       opacity: 0.8;
     }
@@ -45,7 +48,7 @@ const Button = ({
   );
 };
 
-// Prop Types Validation and Default Props
+// Prop Types Validation
 Button.propTypes = {
   marginTop: PropTypes.string,
   marginBottom: PropTypes.string,
@@ -56,17 +59,6 @@ Button.propTypes = {
   bgColor: PropTypes.string,
   innerText: PropTypes.string.isRequired,
   onClick: PropTypes.func,
-};
-
-Button.defaultProps = {
-  marginTop: '0',
-  marginBottom: '0',
-  marginLeft: '0',
-  marginRight: '0',
-  block: false,
-  alignment: 'center',
-  bgColor: '#7e8dfa',
-  onClick: () => alert('Button clicked!'),
 };
 
 export default Button;

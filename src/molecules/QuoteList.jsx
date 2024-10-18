@@ -1,7 +1,7 @@
 // src/components/QuoteList.js
 import React, { useState, useEffect } from 'react';
 import { getQuotes } from '../services/quote';
-import { useNavigate } from 'react-router-dom';
+
 import { dateConverter } from '../utils/helper';
 /** @jsxImportSource @emotion/react */ // Add this to enable the `css` prop.
 import { css } from '@emotion/react';
@@ -66,11 +66,13 @@ const QuoteList = () => {
     }
   };
 
+  console.log(setOffset)
 
   useEffect(() => {
     fetchQuotes();
-  }, [offset]);
+  }, []);
 
+  console.log(hasMore, offset)
   return (
     <>
       {quotes.map((quote, index) => (

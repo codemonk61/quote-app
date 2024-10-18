@@ -3,7 +3,7 @@ import { Global, css } from '@emotion/react';
 
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Styleguides from './Styleguides';
+// import Styleguides from './Styleguides';
 import Header from './layouts/Header';
 import SignInPage from './pages/SignInPage';
 import QuotePage from './pages/QuotePage';
@@ -29,7 +29,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<SignInPage/>} />
           <Route path="/quotepage" element={<QuotePage/>} />
-          <Route path="/styleguides" element={<Styleguides/>} />
+          {/* <Route path="/styleguides" element={<Styleguides/>} /> */}
         </Routes>
       </Router>
     </>

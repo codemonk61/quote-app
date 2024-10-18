@@ -5,8 +5,8 @@
 import { useState, } from 'react'
 import { css } from '@emotion/react';
 import Text from '../atoms/Text';
-import { useNavigate } from 'react-router-dom';
-import { createQuote, login, uploadImage } from '../services/quote';
+
+import { createQuote, uploadImage } from '../services/quote';
 import Input from '../atoms/Input';
 import Button from '../atoms/Button';
 
@@ -25,20 +25,19 @@ const CreateQuote = () => {
     const [text, setText] = useState('');
     const [file, setFile] = useState(null);
     const token = localStorage.getItem('token');
-    const navigate = useNavigate();
+
   
     const handleSubmit = async (e) => {
-      e.preventDefault();
+     
       try {
         const mediaData = await uploadImage(file);
-        await createQuote(token, text, mediaData.mediaUrl);
-        navigate('/quotes');
+        await createQuote(token, text, mediaData[0].url);
       } catch (error) {
         console.error('Failed to create quote:', error);
       }
     };
  
-
+  console.log("file>>>",file)
   return (
     <div css={styles.wrapper}>
       <Text
@@ -72,10 +71,9 @@ const CreateQuote = () => {
       />
       <Input
         type="file"
-        placeholder="Enter OTP"
         value={file}
         height={"35px"}
-        onChange={(e) => setFile(e.target.value)}
+        onChange={(e) => setFile(e.target.files[0])}
       />
       <Button
         block={true}

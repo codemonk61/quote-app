@@ -1,7 +1,6 @@
 
 
 /** @jsxImportSource @emotion/react */
-import { useState, } from 'react'
 import { css } from '@emotion/react';
 
 const styles = {
@@ -33,7 +32,7 @@ const Tabs = ({ data = [], value, onChange,  }) => {
         <div css={styles.tabWrapper}>
             {
                 data.length && data.map((datum) => {
-                    return <div css={value === datum.key ? styles.ativeTab : styles.tab} onClick={() => handleClick(datum.key)}>{datum.label}</div>
+                    return <div key={datum.key} css={value === datum.key ? styles.ativeTab : styles.tab} onClick={() => handleClick(datum.key)}>{datum.label}</div>
                 })
             }
         </div>
