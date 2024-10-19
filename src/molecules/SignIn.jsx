@@ -1,6 +1,6 @@
 
 /** @jsxImportSource @emotion/react */
-import { useState, } from 'react'
+import { useEffect, useState, } from 'react'
 import { css } from '@emotion/react';
 import Text from '../atoms/Text';
 import { useNavigate } from 'react-router-dom';
@@ -38,6 +38,10 @@ const SignIn = ({setIsLoggin}) => {
   };
 
   const isDisable = !(otp.length && username.length)
+
+  useEffect(()=>{
+    localStorage.removeItem('token')
+  }, [])
 
   return (
     <div css={styles.wrapper}>
