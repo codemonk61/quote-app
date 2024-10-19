@@ -30,6 +30,7 @@ const styles = {
 
 const Header = () => {
     const navigate = useNavigate()
+    const isLogin = JSON.parse(localStorage.getItem('token'))
     return (
         <div css={styles.headerWrapper}>
             <div css={styles.logoWrapper}>
@@ -40,6 +41,7 @@ const Header = () => {
                     color={"white"}
                 />
             </div>
+            { isLogin && 
             <div css={styles.signOut} onClick={() => navigate('/')}>
                 <Text
                     text="Sign out"
@@ -48,6 +50,7 @@ const Header = () => {
                     color={"white"}
                 />
             </div>
+}
         </div>
     )
 }
