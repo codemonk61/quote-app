@@ -33,7 +33,7 @@ const QuotePage = (
 
         return <Loader/>
     }
-    console.log(isLoggin,">>>>>>")
+
     return (
 
         <PageWrapper>
