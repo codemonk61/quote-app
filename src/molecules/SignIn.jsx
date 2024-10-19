@@ -18,20 +18,22 @@ const styles = {
     `
 }
 
-const SignIn = () => {
+const SignIn = ({setIsLoggin}) => {
 
   const [username, setUsername] = useState('');
   const [otp, setOtp] = useState('1234');
   const navigate = useNavigate();
 
   const handleLoginClick = async (e) => {
-
+    setIsLoggin(true)
     try {
       const response = await login(username, otp);
       sessionStorage.setItem('token', response.token);
+      setIsLoggin(false)
       navigate('/quotepage');
     } catch (error) {
       console.error('Login failed:', error);
+      setIsLoggin(false)
     }
   };
 

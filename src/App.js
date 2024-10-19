@@ -21,14 +21,18 @@ const globalStyles = css`
   }`
 
 const App = () => {
+  const [isLoggin, setIsLoggin] = React.useState(false)
+  const handleLoggin = (loading) => {
+    setIsLoggin(loading)
+  }
   return (
     <>
       <Global styles={globalStyles} />
       <Router>
         <Header/>
         <Routes>
-          <Route path="/" element={<SignInPage/>} />
-          <Route path="/quotepage" element={<QuotePage/>} />
+          <Route path="/" element={<SignInPage setIsLoggin={handleLoggin}/>} />
+          <Route path="/quotepage" element={<QuotePage isLoggin={isLoggin}/>} />
           {/* <Route path="/styleguides" element={<Styleguides/>} /> */}
         </Routes>
       </Router>

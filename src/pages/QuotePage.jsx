@@ -6,6 +6,7 @@ import QuoteList from '../molecules/QuoteList'
 import CreateQuote from '../molecules/CreateQuote'
 import PageWrapper from '../atoms/PageWrapper'
 import Tabs from '../atoms/Tabs'
+import Loader from '../atoms/Loader';
 
 const tabData = [
     {
@@ -18,11 +19,21 @@ const tabData = [
     }
 ]
 
-const QuotePage = () => {
+const QuotePage = (
+    {isLoggin}
+) => {
+
     const [selectedTab, setSelectedTab] = React.useState('create_quote')
+
     const handleTabChange = (key) => {
         setSelectedTab(key)
     }
+
+    if(isLoggin){
+
+        return <Loader/>
+    }
+    console.log(isLoggin,">>>>>>")
     return (
 
         <PageWrapper>

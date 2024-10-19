@@ -30,9 +30,13 @@ const styles = {
 
 const Header = () => {
     const navigate = useNavigate()
-    console.log(localStorage.getItem('token'))
+  
     const isLogin = sessionStorage.getItem('token')
     
+    const handleSignoutClick = () => {
+        sessionStorage.removeItem('token')
+        navigate('/')
+    }
     return (
         <div css={styles.headerWrapper}>
             <div css={styles.logoWrapper}>
@@ -44,7 +48,7 @@ const Header = () => {
                 />
             </div>
             { isLogin && 
-            <div css={styles.signOut} onClick={() => navigate('/')}>
+            <div css={styles.signOut} onClick={handleSignoutClick}>
                 <Text
                     text="Sign out"
                     fontSize="18px"
