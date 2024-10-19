@@ -35,6 +35,8 @@ const SignIn = () => {
     }
   };
 
+  const isDisable = !(otp.length && username.length)
+
   return (
     <div css={styles.wrapper}>
       <Text
@@ -80,6 +82,7 @@ const SignIn = () => {
         innerText="Login"
         onClick={handleLoginClick}
         marginTop={"24px"}
+        disabled={isDisable}
       />
 
     </div>

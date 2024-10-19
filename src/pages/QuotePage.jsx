@@ -7,32 +7,6 @@ import CreateQuote from '../molecules/CreateQuote'
 import PageWrapper from '../atoms/PageWrapper'
 import Tabs from '../atoms/Tabs'
 
-const styles = {
-wrapper: css`
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap:12px;
-     @media (max-width: 1232px){
-        padding: 0px 12px;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-     }
-
-    @media (max-width: 960px){
-         padding: 0px 12px;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-     }
-
-    @media (max-width: 680px){
-         padding: 0px 12px;
-        display: grid;
-        grid-template-columns:  1fr;
-     }
-    
-   `
-}
-
 const tabData = [
     {
         label: 'Create Quote',
@@ -63,9 +37,7 @@ const QuotePage = () => {
                     <CreateQuote />
                 </div>
                 :
-                <div css={styles.wrapper}>
-                    <QuoteList />
-                </div>
+                <QuoteList />
             }
         </PageWrapper>
     )

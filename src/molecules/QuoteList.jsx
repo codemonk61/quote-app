@@ -5,9 +5,35 @@ import { getQuotes } from '../services/quote';
 import { dateConverter } from '../utils/helper';
 /** @jsxImportSource @emotion/react */ // Add this to enable the `css` prop.
 import { css } from '@emotion/react';
+import Text from '../atoms/Text';
+import Button from '../atoms/Button';
+import Loader from '../atoms/Loader';
 
 
 const styles = {
+  wrapper: css`
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap:12px;
+     @media (max-width: 1232px){
+        padding: 0px 12px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+     }
+
+    @media (max-width: 960px){
+         padding: 0px 12px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+     }
+
+    @media (max-width: 680px){
+         padding: 0px 12px;
+        display: grid;
+        grid-template-columns:  1fr;
+     }
+    
+   `,
   containerStyle: css`
   position: relative;
   height: 200px;
@@ -27,16 +53,11 @@ const styles = {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
+  justify-content: space-between;
+  opacity: 1;
   transition: opacity 0.3s ease-in-out;
-  color: white;
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
   pointer-events: none; /* Prevent interaction with the overlay */
 `,
 
@@ -45,7 +66,25 @@ const styles = {
     opacity: 1; /* Show overlay on hover */
   }
 `,
+  paginationWrapper: css`
+   display: flex;
+   gap: 20px;
+   align-items: center;
+   justify-content: flex-end;
+   padding: 0px 12px;
+   @media (max-width: 1232px){
+        padding: 0px 12px;
+     }
 
+    @media (max-width: 960px){
+         padding: 0px 12px;
+     }
+
+    @media (max-width: 680px){
+         padding: 0px 12px;
+     }
+
+ `
 }
 
 
@@ -53,39 +92,104 @@ const QuoteList = () => {
 
   const [quotes, setQuotes] = useState([]);
   const [offset, setOffset] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
+  const [isLoading, setIsLoading] = useState(false)
+  const limit = 20;
   const token = localStorage.getItem('token');
 
   const fetchQuotes = async () => {
+    setIsLoading(true)
     try {
-      const data = await getQuotes(token, 20, offset);
-      if (data.length === 0) setHasMore(false);
+      const data = await getQuotes(token, limit, offset);
       setQuotes((prev) => [...prev, ...data]);
+      setIsLoading(false)
     } catch (error) {
       console.error('Failed to fetch quotes:', error);
+      setIsLoading(false)
     }
   };
 
-  console.log(setOffset)
+  const handleNext = () => {
+    if (offset + limit < quotes.length) {
+      setOffset(offset + limit);
+    }
+  };
+
+  // Handle Previous Button Click
+  const handlePrev = () => {
+    if (offset > 0) {
+      setOffset(offset - limit);
+    }
+  };
 
   useEffect(() => {
     fetchQuotes();
-  }, []);
+  }, [limit, offset]);
 
-  console.log(hasMore, offset)
+  if(isLoading) {
+    return <Loader/>
+  }
+
+
   return (
     <>
-      {quotes.map((quote, index) => (
-        <div key={index} css={styles.imageWrapper}>
-          <div css={[styles.containerStyle, styles.containerHover]}>
-            <img src={quote.mediaUrl} alt="Quote" css={styles.imageStyle} />
-            <div  css={styles.overlayStyle}>{dateConverter(quote.createdAt)}</div>
+      <div css={styles.wrapper}>
+        {quotes.slice(offset, offset + 20).map((quote, index) => (
+          <div key={index} css={styles.imageWrapper}>
+            <div css={[styles.containerStyle, styles.containerHover]}>
+              <img src={quote.mediaUrl} alt="Quote" css={styles.imageStyle} />
+              <div css={styles.overlayStyle}>
+                <Text
+                  text={`Created At`}
+                  fontSize="14px"
+                  fontWeight="bold"
+                  color="white"
+                  marginLeft='12px'
+                  marginTop='12px'
+                />
+                <Text
+                  text={`${dateConverter(quote.createdAt)}`}
+                  fontSize="14px"
+                  fontWeight="bold"
+                  color="white"
+                  marginRight='12px'
+                  marginTop='12px'
+                />
+              </div>
+            </div>
+            <Text
+              text={`${quote.username}`}
+              fontSize="14px"
+              fontWeight="bold"
+              marginBottom='8px'
+              marginTop='12px'
+            />
+            <Text
+              text={`${quote.text}`}
+              fontSize="14px"
+              marginBottom='12px'
+            />
           </div>
-          <div>{quote.username}</div>
-          <div>{quote.text}</div>
-        </div>
-      ))}
-      {/* {hasMore && <button onClick={() => setOffset(offset + 20)}>Load More</button>} */}
+        ))}
+      </div>
+      <div css={styles.paginationWrapper}>
+        <Button
+          block={false}
+          bgColor="#7e8dfa"
+          innerText="< Prev"
+          onClick={handlePrev}
+          disabled={offset === 0}
+          marginBottom='24px'
+          marginTop='24px'
+        />
+        <Button
+          block={false}
+          bgColor="#7e8dfa"
+          innerText="Next >"
+          onClick={handleNext} disabled={offset + limit >= quotes.length}
+          marginBottom='24px'
+          marginTop='24px'
+        />
+      </div>
     </>
   );
 };

@@ -12,8 +12,9 @@ const Button = ({
   marginBottom = '0',
   marginLeft = '0',
   marginRight = '0',
+  disabled = false
 }) => {
-  // CSS styles using Emotion
+ 
   const buttonWrapper = css`
     margin-top: ${marginTop};
     margin-bottom: ${marginBottom};
@@ -25,7 +26,7 @@ const Button = ({
     display: ${block ? 'block' : 'inline-block'};
     width: ${block ? '100%' : 'auto'};
     text-align: ${alignment};
-    background-color: ${bgColor};
+    background-color: ${ disabled ? 'lightgray' : bgColor };
     color: white;
     padding: 10px 20px;
     border: none;
@@ -41,14 +42,13 @@ const Button = ({
 
   return (
     <div css={buttonWrapper}>
-      <button css={buttonStyle} onClick={onClick}>
+      <button disabled={disabled} css={buttonStyle} onClick={onClick}>
         {innerText}
       </button>
     </div>
   );
 };
 
-// Prop Types Validation
 Button.propTypes = {
   marginTop: PropTypes.string,
   marginBottom: PropTypes.string,
@@ -59,6 +59,7 @@ Button.propTypes = {
   bgColor: PropTypes.string,
   innerText: PropTypes.string.isRequired,
   onClick: PropTypes.func,
+  disabled: PropTypes.bool
 };
 
 export default Button;

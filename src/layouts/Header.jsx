@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import Text from '../atoms/Text';
+import { useNavigate } from 'react-router-dom';
 
 const styles = {
     headerWrapper: css`
@@ -8,26 +9,27 @@ const styles = {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 38px;
+      padding: 12px 48px;
+      @media (max-width: 1232px){
+        padding: 12px 30px;
+     }
+
+    @media (max-width: 960px){
+         padding: 12px 12px;
+     }
+
+    @media (max-width: 680px){
+         padding: 12px 12px;
+     }
+
     `,
-    userWrapper: css`
-      display: flex;
-      align-items: center;
-      gap: 24px
+    signOut: css`
+      cursor: pointer;
     `,
-    user: css`
-      height: 30px;
-      width:30px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: white;
-      border-radius: 50%;
-      
-    `
 }
 
 const Header = () => {
+    const navigate = useNavigate()
     return (
         <div css={styles.headerWrapper}>
             <div css={styles.logoWrapper}>
@@ -38,23 +40,13 @@ const Header = () => {
                     color={"white"}
                 />
             </div>
-            <div css={styles.userWrapper}>
-                <div css={styles.user}>
-                    <Text
-                        text="S"
-                        fontSize="18px"
-                        fontWeight="bold"
-                        color={"#7e8dfa"}
-                    />
-                </div>
-                <div >
-                    <Text
-                        text="Logout"
-                        fontSize="18px"
-                        fontWeight="bold"
-                        color={"white"}
-                    />
-                </div>
+            <div css={styles.signOut} onClick={() => navigate('/')}>
+                <Text
+                    text="Sign out"
+                    fontSize="18px"
+                    fontWeight="bold"
+                    color={"white"}
+                />
             </div>
         </div>
     )

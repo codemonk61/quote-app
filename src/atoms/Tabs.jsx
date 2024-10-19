@@ -9,6 +9,18 @@ const styles = {
       display: flex;
       align-items: center;
       gap: 12px;
+      padding: 0px 12px;
+    @media (max-width: 1232px){
+        padding: 0px 12px;
+     }
+
+    @media (max-width: 960px){
+         padding: 0px 12px;
+     }
+
+    @media (max-width: 680px){
+         padding: 0px 12px;
+     }
     `,
     tab: css`
      padding-bottom: 4px;
