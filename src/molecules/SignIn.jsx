@@ -28,7 +28,7 @@ const SignIn = () => {
 
     try {
       const response = await login(username, otp);
-      localStorage.setItem('token', response.token);
+      sessionStorage.setItem('token', response.token);
       navigate('/quotepage');
     } catch (error) {
       console.error('Login failed:', error);

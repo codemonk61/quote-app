@@ -30,7 +30,9 @@ const styles = {
 
 const Header = () => {
     const navigate = useNavigate()
-    const isLogin = JSON.parse(localStorage.getItem('token'))
+    console.log(localStorage.getItem('token'))
+    const isLogin = sessionStorage.getItem('token')
+    
     return (
         <div css={styles.headerWrapper}>
             <div css={styles.logoWrapper}>
