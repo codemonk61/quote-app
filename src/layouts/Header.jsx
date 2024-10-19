@@ -31,10 +31,10 @@ const styles = {
 const Header = () => {
     const navigate = useNavigate()
   
-    const isLogin = sessionStorage.getItem('token')
+    const isLogin = localStorage.getItem('token')
     
     const handleSignoutClick = () => {
-        sessionStorage.removeItem('token')
+        localStorage.removeItem('token')
         navigate('/')
     }
     return (

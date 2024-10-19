@@ -28,7 +28,7 @@ const SignIn = ({setIsLoggin}) => {
     setIsLoggin(true)
     try {
       const response = await login(username, otp);
-      sessionStorage.setItem('token', response.token);
+      localStorage.setItem('token', response.token);
       setIsLoggin(false)
       navigate('/quotepage');
     } catch (error) {
