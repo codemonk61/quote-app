@@ -1,7 +1,10 @@
 /** @jsxImportSource @emotion/react */
+import {useContext} from 'react'
 import { css } from '@emotion/react';
 import Text from '../atoms/Text';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../AuthContext';
+import Logout from '../atoms/icons/Logout';
 
 const styles = {
     headerWrapper: css`
@@ -23,20 +26,35 @@ const styles = {
      }
 
     `,
+    user: css`
+     height: 30px;
+     width: 30px;
+     border-radius: 50%;
+     display: inline-block;
+     background: white;
+     font-weight: 600;
+     text-align:center;
+     line-height: 30px;
+     text-transform: uppercase
+    `,
     signOut: css`
+    display: flex;
+    align-items: center;
+    gap:12px;
       cursor: pointer;
     `,
 }
 
 const Header = () => {
+
+    const context = useContext(UserContext)
     const navigate = useNavigate()
-  
-    const isLogin = localStorage.getItem('token')
-    
+
     const handleSignoutClick = () => {
-        localStorage.removeItem('token')
+        context.setUser({username: "", otp: "1234"})
         navigate('/')
     }
+
     return (
         <div css={styles.headerWrapper}>
             <div css={styles.logoWrapper}>
@@ -47,14 +65,13 @@ const Header = () => {
                     color={"white"}
                 />
             </div>
-            { isLogin && 
+            { context.user.username && 
             <div css={styles.signOut} onClick={handleSignoutClick}>
-                <Text
-                    text="Sign out"
-                    fontSize="18px"
-                    fontWeight="bold"
-                    color={"white"}
-                />
+                <span css={styles.user}>
+                    {context.user.username.charAt(0)}
+                </span>
+              
+              <Logout/>
             </div>
 }
         </div>

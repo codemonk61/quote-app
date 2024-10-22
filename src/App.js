@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './layouts/Header';
 import SignInPage from './pages/SignInPage';
 import QuotePage from './pages/QuotePage';
+import AuthContext from './AuthContext';
 
 
 const globalStyles = css`
@@ -21,22 +22,19 @@ const globalStyles = css`
   }`
 
 const App = () => {
-  const [isLoggin, setIsLoggin] = React.useState(false)
-  const handleLoggin = (loading) => {
-    setIsLoggin(loading)
-  }
+ 
   return (
-    <>
+    <AuthContext>
       <Global styles={globalStyles} />
       <Router>
         <Header/>
         <Routes>
-          <Route path="/" element={<SignInPage setIsLoggin={handleLoggin}/>} />
-          <Route path="/quotepage" element={<QuotePage isLoggin={isLoggin}/>} />
+          <Route path="/" element={<SignInPage />} />
+          <Route path="/quotepage" element={<QuotePage/>} />
           {/* <Route path="/styleguides" element={<Styleguides/>} /> */}
         </Routes>
       </Router>
-    </>
+    </AuthContext>
   );
 };
 

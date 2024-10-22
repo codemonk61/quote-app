@@ -1,12 +1,13 @@
 
 /** @jsxImportSource @emotion/react */
-import { useEffect, useState, } from 'react'
+import { useEffect, useState, useContext} from 'react'
 import { css } from '@emotion/react';
 import Text from '../atoms/Text';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/quote';
 import Input from '../atoms/Input';
 import Button from '../atoms/Button';
+import { UserContext } from '../AuthContext';
 
 const styles = {
   wrapper: css`
@@ -18,29 +19,31 @@ const styles = {
     `
 }
 
-const SignIn = ({setIsLoggin}) => {
+const SignIn = () => {
 
-  const [username, setUsername] = useState('');
-  const [otp, setOtp] = useState('1234');
+  const context = useContext(UserContext)
+  const [authentication, setAuthentication] = useState({username: "", otp: "1234"})
+  const {user, setUser} = context;
+
   const navigate = useNavigate();
 
   const handleLoginClick = async (e) => {
-    setIsLoggin(true)
+
     try {
-      const response = await login(username, otp);
+      const response = await login(authentication.username, authentication.otp);
       localStorage.setItem('token', response.token);
-      setIsLoggin(false)
+      setUser({...user, username: authentication.username})
       navigate('/quotepage');
     } catch (error) {
       console.error('Login failed:', error);
-      setIsLoggin(false)
+   
     }
   };
 
-  const isDisable = !(otp.length && username.length)
+  const isDisable = !(authentication.otp.length && authentication.username.length)
 
   useEffect(()=>{
-    localStorage.removeItem('token')
+    setUser({username: "", otp: "1234"})
   }, [])
 
   return (
@@ -62,9 +65,9 @@ const SignIn = ({setIsLoggin}) => {
       <Input
         type="text"
         placeholder="Enter username"
-        value={username}
+        value={authentication.username}
         height={"35px"}
-        onChange={(e) => setUsername(e.target.value)}
+        onChange={(e) => setAuthentication({...authentication, username: e.target.value})}
       />
       <Text
         text="Enter OTP:"
@@ -77,9 +80,9 @@ const SignIn = ({setIsLoggin}) => {
       <Input
         type="text"
         placeholder="Enter OTP"
-        value={otp}
+        value={authentication.otp}
         height={"35px"}
-        onChange={(e) => setOtp(e.target.value)}
+        onChange={(e) => setAuthentication({...authentication, otp: e.target.value})}
       />
       <Button
         block={true}
